@@ -6,7 +6,8 @@ const urlSchema = new Schema({
     required: true // 這是個必填欄位
   },
   newUrl: {
-    type: String
+    type: String,
+    reruired: true
   }
 })
 module.exports = mongoose.model('URL', urlSchema)

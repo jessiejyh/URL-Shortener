@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const URL = require('./models/url')
+const generateUrl = require('./generate_url')
 const app = express()
 
 mongoose.connect(process.env.MONGODB_URI_exam, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -20,13 +21,23 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
+
 // 設定首頁路由
 app.get('/', (req, res) => {
-  URL.find() 
-    .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
-    .then(urls => res.render('index', { urls: urls })) // 將資料傳給 index 樣板
-    .catch(error => console.error(error)) // 錯誤處理
+  res.render('index')
 })
+// 與資料庫互動
+app.post('/url', (req, res) => {
+  const url = req.body.url
+  const newUrl = generateUrl(url)
+  res.render('show', { newUrl, url })
+
+  URL.create({ url, newUrl }) //存入資料庫
+    .then(() => res.redirect('/'))//導回首頁
+    .catch(error => console.log(error))
+})
+
 
 // 設定 port 3000
 app.listen(3000, () => {
