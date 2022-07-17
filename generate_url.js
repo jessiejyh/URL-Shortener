@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+
 // define sample function to randomly return a item in an array
 function sample(array) {
   const index = Math.floor(Math.random() * array.length)
@@ -16,12 +18,6 @@ function generateUrl(url) {
   collection = collection.concat(lowerCaseLetters.split(''))
   collection = collection.concat(upperCaseLetters.split(''))
   collection = collection.concat(numbers.split(''))
-
-  // return error notice if collection is empty
-  if (url.length === 0) {
-    return "請輸入網址！"
-    
-  }
 
   // start generating url
   let newUrl = 'https://url-shortener/'

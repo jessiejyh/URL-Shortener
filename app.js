@@ -31,10 +31,16 @@ app.get('/', (req, res) => {
 app.post('/url', (req, res) => {
   const url = req.body.url
   const newUrl = generateUrl(url)
-  res.render('show', { newUrl, url })
+  if (!url) return res.redirect("/") //網址為空倒回首頁
+  
+  URL.findOne({ url: url })
+    .then(data =>
+      data ? res.render('show', { newUrl: data.newUrl, url }) : res.render('show', { newUrl, url }) 
+    )
+    .catch(error => console.error(error))
 
   URL.create({ url, newUrl }) //存入資料庫
-    .then(() => res.redirect('/'))//導回首頁
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
