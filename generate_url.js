@@ -20,7 +20,7 @@ function generateUrl(url) {
   collection = collection.concat(numbers.split(''))
 
   // start generating url
-  let newUrl = 'https://url-shortener/'
+  let newUrl = ''
   for (let i = 1; i <= 5; i++) {
     newUrl += sample(collection)
   }
