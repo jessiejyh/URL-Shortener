@@ -9,4 +9,4 @@ const urlSchema = new Schema({
     type: String
   }
 })
-module.exports = mongoose.model('URL', todoSchema)
+module.exports = mongoose.model('URL', urlSchema)
