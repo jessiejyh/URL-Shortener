@@ -8,7 +8,7 @@ const urlSchema = new Schema({
   },
   newUrl: {
     type: String,
-    reruired: true 
+    required: true 
   }
 })
 module.exports = mongoose.model('URL', urlSchema)
