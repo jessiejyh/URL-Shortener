@@ -1,6 +1,7 @@
 <form action="/url" method="POST" class="mt-5">
   <div class="mt-5 d-flex flex-column align-items-center">
-    <input type="text" placeholder="Input URL here" name="url" style="display: block; width: 500px;">
+    {{!-- 在 input 標籤之後添加 required 屬性，避免使用者送出空白內容 --}}
+    <input type="text" placeholder="Input URL here" name="url" style="display: block; width: 500px;" required="required">
     <button class="btn btn-outline-primary mt-3" type="submit">Shorten</button>
   </div>
 </form>
