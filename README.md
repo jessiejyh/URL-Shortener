@@ -29,6 +29,6 @@
 
 5.install nodemon.js
 
-6.export MONGODB_URI
+6.based on the .env.content,  you should enter your information of mongoDB to set the environment variable
 
 7.npm run dev
