@@ -30,18 +30,15 @@ app.get('/', (req, res) => {
 // 產生新網址畫面
 app.post('/url', (req, res) => {
   const url = req.body.url
+  if (!url) return res.redirect('/') //網址為空倒回首頁
   const urlHeader = req.headers.host
   const randomNum = generateUrl(url)
 
-  if (!url) return res.redirect("/") //網址為空倒回首頁
-
   URL.findOne({ url: url })
-    .then(data =>  //若網址不存在則製造短網址並存入資料庫
-      data ? data : URL.create({ url, newUrl: randomNum })
-    )
-    .then(data => //若網址存在則載入原本短網址
-      data ? res.render('show', { newUrl: data.newUrl, url, urlHeader }) : res.render('show', { newUrl: randomNum, url, urlHeader })
-    )
+    .then(data => data ? data : URL.create({ url, newUrl: randomNum })
+    )   //若網址不存在則製造短網址並存入資料庫
+    .then(data => res.render('show', { newUrl: data.newUrl, url, urlHeader })
+    )   //若網址存在則會載入原本短網址
     .catch(error => console.error(error))
 })
 
